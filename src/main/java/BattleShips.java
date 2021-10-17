@@ -14,6 +14,9 @@ public class BattleShips {
 
         //Creating map for playing
         createOceanMap();
+
+        //Deploying ships for player
+        deployPlayerShips();
     }
 
     //Fill grid and show it
@@ -39,6 +42,57 @@ public class BattleShips {
         }
 
         //Last line
+        System.out.print("  ");
+        for(int i = 0; i < numCols; i++)
+            System.out.print(i);
+        System.out.println();
+    }
+
+    public static void deployPlayerShips(){
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("\nDeploy your ships:");
+        //Deploying five ships for player
+        BattleShips.playerShips = 5;
+        for (int i = 1; i <= BattleShips.playerShips; ) {
+            System.out.print("Enter X coordinate for your " + i + " ship: ");
+            int x = input.nextInt();
+            System.out.print("Enter Y coordinate for your " + i + " ship: ");
+            int y = input.nextInt();
+
+            if((x >= 0 && x < numRows) && (y >= 0 && y < numCols) && (Objects.equals(grid[x][y], " ")))
+            {
+                grid[x][y] = "@";
+                i++;
+            }
+            else if((x >= 0 && x < numRows) && (y >= 0 && y < numCols) && Objects.equals(grid[x][y], "@"))
+                System.out.println("You can't place two or more ships on the same location");
+            else if((x < 0 || x >= numRows) || (y < 0 || y >= numCols))
+                System.out.println("You can't place ships outside the " + numRows + " by " + numCols + " grid");
+        }
+        printOceanMap();
+    }
+
+    public static void printOceanMap(){
+        System.out.println();
+        //First section of Ocean Map
+        System.out.print("  ");
+        for(int i = 0; i < numCols; i++)
+            System.out.print(i);
+        System.out.println();
+
+        //Middle section of Ocean Map
+        for(int x = 0; x < grid.length; x++) {
+            System.out.print(x + "|");
+
+            for (int y = 0; y < grid[x].length; y++){
+                System.out.print(grid[x][y]);
+            }
+
+            System.out.println("|" + x);
+        }
+
+        //Last section of Ocean Map
         System.out.print("  ");
         for(int i = 0; i < numCols; i++)
             System.out.print(i);
