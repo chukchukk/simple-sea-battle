@@ -1,4 +1,8 @@
 import org.junit.jupiter.api.Test;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
 import static org.junit.jupiter.api.Assertions.*;
 public class GameTest {
     @Test
@@ -20,5 +24,16 @@ public class GameTest {
                 assertEquals(" ", BattleShips.grid[i][j]);
             }
         }
+    }
+
+    @Test
+    public void deployPlayerShips() {
+        String userInput = "1\n2\n3\n5\n4\n9\n8\n8\n6\n6";
+        ByteArrayInputStream bais = new ByteArrayInputStream(userInput.getBytes());
+        System.setIn(bais);
+        assert BattleShips.playerShips == 0;
+        BattleShips.createOceanMap();
+        BattleShips.deployPlayerShips();
+        assert BattleShips.playerShips == 5;
     }
 }
