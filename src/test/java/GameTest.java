@@ -10,4 +10,15 @@ public class GameTest {
         assertArrayEquals(new String[10][10], BattleShips.grid);
         assertArrayEquals(new int[10][10], BattleShips.missedGuesses);
     }
+
+    @Test
+    public void creatingMap() {
+        assert BattleShips.grid[0][0] == null;
+        BattleShips.createOceanMap();
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                assertEquals(" ", BattleShips.grid[i][j]);
+            }
+        }
+    }
 }
