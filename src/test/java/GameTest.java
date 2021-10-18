@@ -50,4 +50,79 @@ public class GameTest {
         }
         assertTrue(k > 0);
     }
+
+    @Test
+    public void playerTurnOwn() {
+        String userInput = "1\n2\n3\n5\n4\n9\n8\n8\n6\n6";
+        ByteArrayInputStream bais = new ByteArrayInputStream(userInput.getBytes());
+        System.setIn(bais);
+        BattleShips.createOceanMap();
+        BattleShips.deployPlayerShips();
+
+        assert BattleShips.playerShips == 5;
+        userInput = "1\n2";
+        ByteArrayInputStream newBais = new ByteArrayInputStream(userInput.getBytes());
+        System.setIn(newBais);
+
+        BattleShips.playerTurn();
+        assertTrue(BattleShips.playerShips < 5);
+    }
+
+    @Test
+    public void playerTurnComputerShip() {
+        String userInput = "1\n2\n3\n5\n4\n9\n8\n8\n6\n6";
+        ByteArrayInputStream bais = new ByteArrayInputStream(userInput.getBytes());
+        System.setIn(bais);
+        BattleShips.createOceanMap();
+        BattleShips.deployPlayerShips();
+        BattleShips.deployComputerShips();
+
+        int x = -1;
+        int y = -1;
+        for (int i = 0; i < 10; i++) {
+            for(int j = 0; j < 10; j++) {
+                if (BattleShips.grid[i][j].equals("x")) {
+                    x = i;
+                    y = j;
+                    break;
+                }
+            }
+        }
+        userInput = x + "\n" + y;
+        ByteArrayInputStream newBais = new ByteArrayInputStream(userInput.getBytes());
+        System.setIn(newBais);
+        assert BattleShips.computerShips == 5;
+        BattleShips.playerTurn();
+        assertTrue(BattleShips.computerShips < 5);
+    }
+
+    @Test
+    public void playerTurnMissed() {
+        String userInput = "1\n2\n3\n5\n4\n9\n8\n8\n6\n6";
+        ByteArrayInputStream bais = new ByteArrayInputStream(userInput.getBytes());
+        System.setIn(bais);
+        BattleShips.createOceanMap();
+        BattleShips.deployPlayerShips();
+        BattleShips.deployComputerShips();
+
+        int x = -1;
+        int y = -1;
+        for (int i = 0; i < 10; i++) {
+            for(int j = 0; j < 10; j++) {
+                if (BattleShips.grid[i][j].equals(" ")) {
+                    x = i;
+                    y = j;
+                    break;
+                }
+            }
+        }
+        userInput = x + "\n" + y;
+        ByteArrayInputStream newBais = new ByteArrayInputStream(userInput.getBytes());
+        System.setIn(newBais);
+        assert BattleShips.computerShips == 5;
+        assert BattleShips.playerShips == 5;
+        BattleShips.playerTurn();
+        assertEquals(5, BattleShips.computerShips);
+        assertEquals(5, BattleShips.playerShips);
+    }
 }
