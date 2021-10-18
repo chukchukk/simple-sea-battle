@@ -73,6 +73,24 @@ public class BattleShips {
         printOceanMap();
     }
 
+    public static void deployComputerShips(){
+        System.out.println("\nComputer is deploying ships");
+        //Deploying five ships for computer
+        BattleShips.computerShips = 5;
+        for (int i = 1; i <= BattleShips.computerShips; ) {
+            int x = (int)(Math.random() * 10);
+            int y = (int)(Math.random() * 10);
+
+            if((x >= 0 && x < numRows) && (y >= 0 && y < numCols) && (Objects.equals(grid[x][y], " ")))
+            {
+                grid[x][y] =   "x";
+                System.out.println(i + ". ship DEPLOYED");
+                i++;
+            }
+        }
+        printOceanMap();
+    }
+
     public static void printOceanMap(){
         System.out.println();
         //First section of Ocean Map
