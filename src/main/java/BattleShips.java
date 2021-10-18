@@ -91,6 +91,70 @@ public class BattleShips {
         printOceanMap();
     }
 
+    public static void playerTurn(){
+        System.out.println("\nYOUR TURN");
+        int x, y;
+        do {
+            Scanner input = new Scanner(System.in);
+            System.out.print("Enter X coordinate: ");
+            x = input.nextInt();
+            System.out.print("Enter Y coordinate: ");
+            y = input.nextInt();
+
+            if ((x >= 0 && x < numRows) && (y >= 0 && y < numCols)) //valid guess
+            {
+                if (Objects.equals(grid[x][y], "x")) //if computer ship is already there; computer loses ship
+                {
+                    System.out.println("Boom! You sunk the ship!");
+                    grid[x][y] = "!"; //Hit mark
+                    --BattleShips.computerShips;
+                }
+                else if (Objects.equals(grid[x][y], "@")) {
+                    System.out.println("Oh no, you sunk your own ship :(");
+                    grid[x][y] = "x";
+                    --BattleShips.playerShips;
+                    ++BattleShips.computerShips;
+                }
+                else if (Objects.equals(grid[x][y], " ")) {
+                    System.out.println("Sorry, you missed");
+                    grid[x][y] = "-";
+                }
+            }
+            else System.out.println("You can't place ships outside the " + numRows + " by " + numCols + " grid");
+        }while((x < 0 || x >= numRows) || (y < 0 || y >= numCols));  //keep re-prompting till valid guess
+    }
+
+    public static void computerTurn(){
+        System.out.println("\nCOMPUTER'S TURN");
+        //Guess co-ordinates
+        int x, y;
+        do {
+            x = (int)(Math.random() * 10);
+            y = (int)(Math.random() * 10);
+
+            if ((x >= 0 && x < numRows) && (y >= 0 && y < numCols)) //valid guess
+            {
+                if (Objects.equals(grid[x][y], "@")) //if player ship is already there; player loses ship
+                {
+                    System.out.println("The Computer sunk one of your ships!");
+                    grid[x][y] = "x";
+                    --BattleShips.playerShips;
+                    ++BattleShips.computerShips;
+                }
+                else if (Objects.equals(grid[x][y], "x")) {
+                    System.out.println("The Computer sunk one of its own ships");
+                    grid[x][y] = "!";
+                }
+                else if (Objects.equals(grid[x][y], " ")) {
+                    System.out.println("Computer missed");
+                    //Saving missed guesses for computer
+                    if(missedGuesses[x][y] != 1)
+                        missedGuesses[x][y] = 1;
+                }
+            }
+        }while((x < 0 || x >= numRows) || (y < 0 || y >= numCols));  //keep re-prompting till valid guess
+    }
+
     public static void printOceanMap(){
         System.out.println();
         //First section of Ocean Map
