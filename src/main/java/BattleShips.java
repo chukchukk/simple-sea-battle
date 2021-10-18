@@ -17,6 +17,17 @@ public class BattleShips {
 
         //Deploying ships for player
         deployPlayerShips();
+
+        //Deploying computer's ships
+        deployComputerShips();
+
+        //Battle
+        do {
+            Battle();
+        }while(BattleShips.playerShips != 0 && BattleShips.computerShips != 0);
+
+        //Game over
+        gameOver();
     }
 
     //Fill grid and show it
@@ -91,6 +102,17 @@ public class BattleShips {
         printOceanMap();
     }
 
+    public static void Battle(){
+        playerTurn();
+        computerTurn();
+
+        printOceanMap();
+
+        System.out.println();
+        System.out.println("Your ships: " + BattleShips.playerShips + " | Computer ships: " + BattleShips.computerShips);
+        System.out.println();
+    }
+
     public static void playerTurn(){
         System.out.println("\nYOUR TURN");
         int x, y;
@@ -153,6 +175,14 @@ public class BattleShips {
                 }
             }
         }while((x < 0 || x >= numRows) || (y < 0 || y >= numCols));  //keep re-prompting till valid guess
+    }
+
+    public static void gameOver(){
+        System.out.println("Your ships: " + BattleShips.playerShips + " | Computer ships: " + BattleShips.computerShips);
+        if(BattleShips.playerShips > 0 && BattleShips.computerShips <= 0)
+            System.out.println("Hooray! You won the battle :)");
+        else
+            System.out.println("Sorry, you lost the battle");
     }
 
     public static void printOceanMap(){
