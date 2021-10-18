@@ -1,7 +1,6 @@
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 public class GameTest {
@@ -35,5 +34,20 @@ public class GameTest {
         BattleShips.createOceanMap();
         BattleShips.deployPlayerShips();
         assert BattleShips.playerShips == 5;
+    }
+
+    @Test
+    public void deployComputerShips() {
+        BattleShips.createOceanMap();
+        BattleShips.deployComputerShips();
+        int k = 0;
+        for (String[] strings : BattleShips.grid) {
+            for(String val: strings) {
+                if (val.equals("x")) {
+                    k++;
+                }
+            }
+        }
+        assertTrue(k > 0);
     }
 }
